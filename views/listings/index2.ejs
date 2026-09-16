@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StayFinder | Explore Stays</title>
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  >
+  <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+
+      <a href="/" class="logo">
+        <i class="fa-solid fa-house"></i>
+        StayFinder
+      </a>
+
+      <div class="nav-search">
+        <button>Anywhere</button>
+        <span></span>
+        <button>Any week</button>
+        <span></span>
+        <button>Add guests</button>
+        <button class="search-btn">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+
+      <div class="nav-actions">
+        <a href="#">Become a host</a>
+        <button class="profile-btn">
+          <i class="fa-solid fa-bars"></i>
+          <i class="fa-solid fa-user"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- Category Navigation -->
+  <div class="categories-wrapper">
+    <div class="categories">
+
+      <div class="category active">
+        <i class="fa-solid fa-house"></i>
+        <span>All</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-mountain"></i>
+        <span>Mountains</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-umbrella-beach"></i>
+        <span>Beach</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-tree"></i>
+        <span>Forest</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-water"></i>
+        <span>Lakes</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-city"></i>
+        <span>City</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-snowflake"></i>
+        <span>Snow</span>
+      </div>
+
+      <div class="category">
+        <i class="fa-solid fa-island-tropical"></i>
+        <span>Islands</span>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Main Content -->
+  <main class="main-container">
+
+    <div class="heading">
+      <div>
+        <h1>Explore stays around the world</h1>
+        <p>Find your perfect place to stay</p>
+      </div>
+
+      <button class="filter-btn">
+        <i class="fa-solid fa-sliders"></i>
+        Filters
+      </button>
+    </div>
+
+
+    <!-- Listings -->
+    <section class="listing-grid">
+
+      <% allListings.forEach(listing => { %>
+
+        <article class="listing-card">
+
+          <div class="image-wrapper">
+
+            <img
+              src="<%= listing.image %>"
+              alt="<%= listing.title %>"
+              loading="lazy"
+            >
+
+            <button class="heart-btn">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+
+            <div class="image-location">
+              <i class="fa-solid fa-location-dot"></i>
+              <%= listing.location %>
+            </div>
+
+          </div>
+
+          <div class="listing-info">
+
+            <div class="title-row">
+              <h2><a href="/listing/<%= listing._id %>"><%= listing.title %></a></h2>
+
+              <div class="rating">
+                <i class="fa-solid fa-star"></i>
+                <span>4.9</span>
+              </div>
+            </div>
+
+            <p class="description">
+              <%= listing.description %>
+            </p>
+
+            <p class="country">
+              <i class="fa-solid fa-earth-americas"></i>
+              <%= listing.country %>
+            </p>
+
+            <div class="price">
+              <strong>&#8377;<%= listing.price.toLocaleString() %></strong>
+              <span> night</span>
+            </div>
+
+          </div>
+
+        </article>
+
+      <% }) %>
+
+    </section>
+
+  </main>
+
+
+  <!-- Footer -->
+  <footer class="footer">
+
+    <div class="footer-container">
+
+      <div>
+        <a href="/" class="logo">
+          <i class="fa-solid fa-house"></i>
+          StayFinder
+        </a>
+        <p>Find beautiful places around the world.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="#">About</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Contact</a>
+      </div>
+
+    </div>
+
+    <div class="copyright">
+      © 2026 StayFinder. All rights reserved.
+    </div>
+
+  </footer>
+
+</body>
+</html>
+
+
+<!-- <% layout("/layouts/boilerPlate") %>
+<body>
+    <h3>All Listing</h3>
+    <!-- <form action="/listing/new" method="get">
+        <button>create new</button>
+    </form> -->
+       <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-3">
+         <% for(let listing of allListings){ %>
+            <a href="/listing/<%= listing._id%>" class="listing-link ">
+                 <div class="card">
+  <img src="<%= listing.image %>" class="card-img-top" style="height: 20rem;" alt="...">
+ <div class="card-img-overlay"> </div>
+     <div class="card-body">
+    <h5 class="card-title"><%= listing.title %></h5>
+    <p class="card-text">&#8377;<%= listing.price.toLocaleString("en-IN") %>/night</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+
+</div>
+            </a>
+        <% } %>  
+       </div>
+    
+</body>
+
+<!-- <ul>
+        <% for(let listing of allListings){ %>
+            <li><a href="/listing/<%= listing._id %>"><%= listing.title %></a></li>
+        <% } %>
+    </ul> --> -->

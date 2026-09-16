@@ -1,0 +1,111 @@
+<% layout("/layouts/boilerPlate") %>
+
+<style>
+    .error-page {
+        min-height: 75vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .error-box {
+        width: 100%;
+        max-width: 600px;
+        text-align: center;
+        padding: 50px 40px;
+        border-radius: 20px;
+        background: #ffffff;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .error-code {
+        font-size: 100px;
+        font-weight: 800;
+        color: #e63946;
+        line-height: 1;
+        margin-bottom: 15px;
+    }
+
+    .error-icon {
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+
+    .error-title {
+        font-size: 30px;
+        color: #222;
+        margin-bottom: 15px;
+    }
+
+    .error-message {
+        font-size: 17px;
+        color: #666;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    .home-button {
+        display: inline-block;
+        padding: 12px 25px;
+        background: #222;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.25s ease;
+    }
+
+    .home-button:hover {
+        background: #e63946;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 600px) {
+        .error-box {
+            padding: 40px 25px;
+        }
+
+        .error-code {
+            font-size: 75px;
+        }
+
+        .error-title {
+            font-size: 24px;
+        }
+
+        .error-message {
+            font-size: 15px;
+        }
+    }
+</style>
+
+
+<div class="error-page">
+
+    <div class="error-box">
+
+        <div class="error-icon">
+            ⚠️
+        </div>
+
+        <div class="error-code">
+            <%= statusCode %>
+        </div>
+
+        <h1 class="error-title">
+            Oops! Something went wrong.
+        </h1>
+
+        <p class="error-message">
+            <%= message %>
+        </p>
+
+        <a href="/" class="home-button">
+            ← Back to Home
+        </a>
+
+    </div>
+
+</div>

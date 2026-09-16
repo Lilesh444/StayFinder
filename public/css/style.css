@@ -1,0 +1,196 @@
+/* ========================================
+   GENERAL
+======================================== */
+
+body {
+    color: #222222;
+}
+
+.main-content {
+    min-height: 70vh;
+}
+
+
+/* ========================================
+   NAVBAR
+======================================== */
+
+.navbar {
+    min-height: 5rem;
+}
+
+.navbar-brand {
+    color: #ff385c !important;
+    font-size: 1.7rem;
+    font-weight: 700;
+}
+
+.navbar-brand:hover {
+    color: #e03150 !important;
+}
+
+.nav-link {
+    color: #222222 !important;
+}
+
+.nav-link:hover {
+    color: #ff385c !important;
+}
+
+
+/* ========================================
+   LISTINGS
+======================================== */
+
+.listing-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.listing-link:hover {
+    color: inherit;
+}
+
+.listing-card-image {
+    height: 20rem;
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+.card {
+    border: none;
+}
+
+.listing-link .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.listing-link:hover .card {
+    transform: translateY(-4px);
+}
+
+.listing-link:hover .listing-card-image {
+    opacity: 0.92;
+}
+
+.card-body {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.card-title {
+    font-weight: 600;
+}
+
+.card-text {
+    color: #717171;
+}
+
+.card-text strong {
+    color: #222222;
+}
+/* ========================================
+   SHOW LISTING PAGE
+======================================== */
+
+.listing-show-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 1rem 1rem 0 0;
+}
+
+/* ========================================
+   FORMS
+======================================== */
+
+.form-control {
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    border-color: #ff385c;
+    box-shadow: 0 0 0 0.2rem rgba(255, 56, 92, 0.15);
+}
+
+.btn-primary {
+    background-color: #ff385c;
+    border-color: #ff385c;
+}
+
+.btn-primary:hover {
+    background-color: #e03150;
+    border-color: #e03150;
+}
+
+
+/* ========================================
+   LISTING DETAILS
+======================================== */
+
+.listing-details-card {
+    border: 1px solid #dddddd;
+    border-radius: 1rem;
+}
+
+.listing-details p {
+    margin-bottom: 12px;
+}
+
+
+/* ========================================
+   FOOTER
+======================================== */
+
+footer {
+    margin-top: 60px;
+}
+
+.f-info {
+    min-height: 8rem;
+
+    background-color: #ebebeb;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    padding: 25px 20px;
+}
+
+.f-info-socials {
+    width: 100%;
+    font-size: 1.5rem;
+}
+
+.f-info-socials a {
+    color: #222222;
+    margin: 0 6px;
+    text-decoration: none;
+}
+
+.f-info-socials a:hover {
+    color: #ff385c;
+}
+
+.f-info-copyright {
+    width: 100%;
+}
+
+.f-info-links {
+    width: 100%;
+}
+
+.f-info-links a {
+    text-decoration: none;
+    color: #222222;
+    margin: 0 8px;
+}
+
+.f-info-links a:hover {
+    text-decoration: underline;
+}
