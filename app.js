@@ -4,10 +4,11 @@ const methodOverride = require('method-override');
 const mongoose=require('mongoose')
 const path=require('path')
 const Listing = require('./models/listing')
+const Review=require('./models/review.js')
 const ejsMate=require('ejs-mate')
 // const wrapAsync=requiree('./utilities/wrapAsync.js')
 const customError=require("./utilities/customError.js")
-const {listingSchema}=require("./schema.js")
+const {listingSchema,reviewSchema}=require("./schema.js")
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -36,6 +37,14 @@ const validateListing=(req,res,next)=>{
             next()
         }
 }
+const validateReview=(req,res,next)=>{
+    const {error}=reviewSchema.validate(req.body)
+    if(error){
+        throw new customError(400,error)
+    }else{
+        next()
+    }
+}
 
 app.get('/',(req,res)=>{
     // res.send('Hello there, Mr. Root, Welcome to Stayfinder')
@@ -52,7 +61,7 @@ app.get('/listing/new',(req,res)=>{
 
 app.get('/listing/:id',async(req,res)=>{
     let id=req.params.id
-    const listing=await Listing.findById(id)
+    const listing=await Listing.findById(id).populate("reviews")
     res.render('listings/show.ejs',{listing}) 
 })
 
@@ -108,6 +117,22 @@ app.delete('/listing/:id/delete',async (req,res,next)=>{
     return res.redirect('/listing')
     } catch (error) {
         next(error)
+    }
+})
+
+// add Reviews
+app.post('/listing/:id/newreview',validateReview,async(req,res,next)=>{
+    try {
+        let listing=await Listing.findById(req.params.id)
+    let {comment,rating}=req.body
+    let newReview=new Review({comment,rating})
+    await newReview.save()
+     listing.reviews.push(newReview)
+    await listing.save()
+    console.log("new review saved")
+    res.redirect(`/listing/${listing._id}`)
+    } catch (error) {
+        next(err)
     }
 })
 
