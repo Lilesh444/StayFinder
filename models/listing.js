@@ -1,4 +1,5 @@
 const mongoose=require('mongoose')
+const Review=require('../models/review')
 
 const listingSchema=new mongoose.Schema({
     title:{
@@ -24,6 +25,12 @@ const listingSchema=new mongoose.Schema({
     ]
 })
 
+// yahan jab listing delete hoga tho review delete cascading ka implementation 
+listingSchema.post('findOneAndDelete',async(listing)=>{
+    if(listing){
+    await Review.deleteMany({_id:{$in:listing.reviews}})
+    }
+})
 const Listing=mongoose.model("Listing",listingSchema)
 
 module.exports=Listing

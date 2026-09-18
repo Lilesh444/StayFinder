@@ -135,6 +135,19 @@ app.post('/listing/:id/newreview',validateReview,async(req,res,next)=>{
         next(err)
     }
 })
+// delete review
+app.delete('/listing/:id/reviews/:reviewId',async(req,res,next)=>{
+    try {
+        let {id,reviewId}=req.params
+    console.log(id,"",reviewId)
+    //pehle review ko listing se hatao then review wale Db se hatana hai
+    await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}})
+    await Review.findByIdAndDelete(reviewId) // this to remove the review from review wala DB only listing ke andar se nahi
+    res.redirect(`/listing/${id}`)
+    } catch (error) {
+        next(new customError(400,"Bad Request"))
+    }
+})
 
 app.all("/{*splat}",(req,res,next)=>{
     next(new customError(404,"Page Not Found !!!"))

@@ -4,7 +4,7 @@
         <div class="col-lg-8">
 
             <div class="mb-4">
-                <h3>Listing Details</h3>
+                <h3><%= listing.title %></h3>
             </div>
 
 
@@ -17,9 +17,9 @@
                 <div class="card-body">
 
                     <!-- Title -->
-                    <h4 class="card-title mb-3">
+                    <!-- <h4 class="card-title mb-3">
                         <%= listing.title %>
-                    </h4>
+                    </h4> -->
 
 
                     <!-- Description -->
@@ -128,6 +128,11 @@
                                             </p>
 
                                         </div>
+                                        <form
+                                            action="/listing/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                                            class="mb-3 px-3" method="post">
+                                            <button class="btn btn-danger btn-sm ">Delete</button>
+                                        </form>
                                     </div>
 
                                 </div>
