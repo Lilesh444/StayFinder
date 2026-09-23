@@ -7,6 +7,7 @@ const ejsMate=require('ejs-mate')
 const customError=require("./utilities/customError.js")
 const listingRoute=require("./routes/listingRoute.js")
 const reviewRoute=require("./routes/reviewRoute.js")
+const session=require('express-session')
 //unused after express Router
 // const Listing = require('./models/listing')
 // const Review=require('./models/review.js')
@@ -23,6 +24,18 @@ app.use(express.json())
 app.use(methodOverride('_method'));
 app.engine('ejs',ejsMate)
 
+const sessionOptions={
+    secret:"mysecretecode",
+    resave:false,
+    saveUninitialized:true,
+    cookie:{
+        expires:Date.now() + 7 * 24 * 60 * 60 * 1000 ,
+    //   from now after days hrs  mins secs milisecs
+        maxAge:7*24 * 60 * 60 * 1000,
+        httpOnly:true
+    }
+}
+app.use(session(sessionOptions))
 
 
 async function main() {
