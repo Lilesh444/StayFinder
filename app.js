@@ -8,6 +8,7 @@ const customError=require("./utilities/customError.js")
 const listingRoute=require("./routes/listingRoute.js")
 const reviewRoute=require("./routes/reviewRoute.js")
 const session=require('express-session')
+const flash=require('connect-flash')
 //unused after express Router
 // const Listing = require('./models/listing')
 // const Review=require('./models/review.js')
@@ -35,8 +36,6 @@ const sessionOptions={
         httpOnly:true
     }
 }
-app.use(session(sessionOptions))
-
 
 async function main() {
   await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
@@ -48,11 +47,21 @@ main()
 
 
 
+app.use(session(sessionOptions))
+app.use(flash())
 
+// flash middleware
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success")
+    // console.log("SUCCESS:", res.locals.success)
+    res.locals.error=req.flash('error')
+    next()
+})
 app.get('/',(req,res)=>{
     // res.send('Hello there, Mr. Root, Welcome to Stayfinder')
     res.render('listings/home.ejs')
 })
+
 // all app.listing wala functionality replaced to listingroute file and used here with express router
 app.use('/listing',listingRoute)
 
