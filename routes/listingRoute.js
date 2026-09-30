@@ -20,6 +20,10 @@ router.get('/',async(req,res)=>{
 })
 
 router.get('/new',(req,res)=>{
+    if(!req.isAuthenticated()){
+        req.flash('error','plz login to add a listing')
+        return res.redirect('/users/login')
+    }
     res.render('listings/new.ejs')
 })
 
