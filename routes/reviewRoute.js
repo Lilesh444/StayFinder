@@ -5,6 +5,7 @@ const {listingSchema,reviewSchema}=require("../schema.js")
 const customError=require("../utilities/customError.js")
 const Review=require("../models/review.js")
 const Listing=require("../models/listing.js")
+const { isLoggedIn, isReviewAuthor } = require('../middleware.js')
 
 
 // server side validation with npm Joi
@@ -19,11 +20,12 @@ const validateReview=(req,res,next)=>{
     }
 }
 // add Reviews
-router.post('/newreview',validateReview,async(req,res,next)=>{
+router.post('/newreview',isLoggedIn,validateReview,async(req,res,next)=>{
     try {
         let listing=await Listing.findById(req.params.id)
     let {comment,rating}=req.body
     let newReview=new Review({comment,rating})
+    newReview.author=req.user._id
     await newReview.save()
      listing.reviews.push(newReview)
     await listing.save()
@@ -35,7 +37,7 @@ router.post('/newreview',validateReview,async(req,res,next)=>{
     }
 })
 // delete review
-router.delete('/:reviewId',async(req,res,next)=>{
+router.delete('/:reviewId',isLoggedIn,isReviewAuthor,async(req,res,next)=>{
     try {
         let {id,reviewId}=req.params
     console.log(id,"",reviewId)

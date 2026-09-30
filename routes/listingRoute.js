@@ -4,7 +4,7 @@ const router=express.Router()
 const {listingSchema}=require("../schema.js")
 const customError=require("../utilities/customError.js")
 const Listing=require("../models/listing.js")
-const { isLoggedIn } = require('../middleware.js')
+const { isLoggedIn, isOwner } = require('../middleware.js')
 
 const validateListing=(req,res,next)=>{
     const { error } = listingSchema.validate(req.body);
@@ -26,7 +26,9 @@ router.get('/new',isLoggedIn,(req,res)=>{
 
 router.get('/:id',async(req,res)=>{
     let id=req.params.id
-    const listing=await Listing.findById(id).populate("reviews").populate('owner')
+    const listing=await Listing.findById(id).
+    populate({path:"reviews",populate:{path:'author'}}).
+    populate('owner')
     if(!listing){
     req.flash('error','There is no such Listing')
     return res.redirect('/listing')
@@ -55,7 +57,7 @@ router.post('/new',isLoggedIn,validateListing, async (req, res,next) => {
         next(error)
     }
 });
-router.get('/:id/edit',isLoggedIn,async(req,res)=>{
+router.get('/:id/edit',isLoggedIn,isOwner,async(req,res)=>{
     let id=req.params.id
     try {
         let listing=await Listing.findById(id)
@@ -65,10 +67,11 @@ router.get('/:id/edit',isLoggedIn,async(req,res)=>{
     }
 })
 
-router.put('/:id/edit',isLoggedIn,validateListing,async (req,res,next)=>{
+router.put('/:id/edit',isLoggedIn,isOwner,validateListing,async (req,res,next)=>{
     let id=req.params.id
     let {title, description, image, price, location, country}=req.body
     try {
+        // the authorization code in middleware file
         await Listing.findByIdAndUpdate(
         id,
         {title, description, image, price, location, country},
@@ -81,7 +84,7 @@ router.put('/:id/edit',isLoggedIn,validateListing,async (req,res,next)=>{
     }
 })
 
-router.delete('/:id/delete',isLoggedIn,async (req,res,next)=>{
+router.delete('/:id/delete',isLoggedIn,isOwner,async (req,res,next)=>{
     let id=req.params.id
     try {
         const deletedList=await Listing.findByIdAndDelete(id)
