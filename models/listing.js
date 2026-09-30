@@ -22,7 +22,11 @@ const listingSchema=new mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:"Review"
         }
-    ]
+    ],
+    owner:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"User"
+    }
 })
 
 // yahan jab listing delete hoga tho review delete cascading ka implementation 

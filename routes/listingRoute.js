@@ -26,7 +26,7 @@ router.get('/new',isLoggedIn,(req,res)=>{
 
 router.get('/:id',async(req,res)=>{
     let id=req.params.id
-    const listing=await Listing.findById(id).populate("reviews")
+    const listing=await Listing.findById(id).populate("reviews").populate('owner')
     if(!listing){
     req.flash('error','There is no such Listing')
     return res.redirect('/listing')
@@ -38,7 +38,7 @@ router.post('/new',isLoggedIn,validateListing, async (req, res,next) => {
     let { title, description, image, price, location, country } = req.body;
     
     try {
-        let newListing = await Listing.create({
+        let newListing = new Listing({
         title,
         description,
         image,
@@ -46,6 +46,8 @@ router.post('/new',isLoggedIn,validateListing, async (req, res,next) => {
         location,
         country
     });
+    newListing.owner=req.user._id;
+    await newListing.save()
     req.flash('success','New Listing Created')
     console.log(newListing)
     res.redirect('/listing');
