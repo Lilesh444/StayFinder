@@ -3,7 +3,7 @@
     <div class="container-fluid">
 
         <!-- Brand -->
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand fw-bold" href="/">
             StayFinder
         </a>
 
@@ -20,7 +20,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Navigation Links -->
+        <!-- Main Navigation Links -->
         <div class="collapse navbar-collapse" id="navbarNav">
 
             <ul class="navbar-nav">
@@ -40,6 +40,37 @@
                         Add New Listing
                     </a>
                 </li>
+
+            </ul>
+
+            <!-- Signup / Login / Logout -->
+            <ul class="navbar-nav ms-auto">
+
+                <% if(!user){ %>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/signup">
+                            Signup
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/login">
+                            Login
+                        </a>
+                    </li>
+
+                <% } %>
+
+                <% if(user){ %>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users/logout">
+                            Logout
+                        </a>
+                    </li>
+
+                <% } %>
 
             </ul>
 
