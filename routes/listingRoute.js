@@ -4,6 +4,7 @@ const router=express.Router()
 const {listingSchema}=require("../schema.js")
 const customError=require("../utilities/customError.js")
 const Listing=require("../models/listing.js")
+const { isLoggedIn } = require('../middleware.js')
 
 const validateListing=(req,res,next)=>{
     const { error } = listingSchema.validate(req.body);
@@ -19,11 +20,7 @@ router.get('/',async(req,res)=>{
     res.render('listings/index.ejs',{allListings})
 })
 
-router.get('/new',(req,res)=>{
-    if(!req.isAuthenticated()){
-        req.flash('error','plz login to add a listing')
-        return res.redirect('/users/login')
-    }
+router.get('/new',isLoggedIn,(req,res)=>{
     res.render('listings/new.ejs')
 })
 
@@ -37,7 +34,7 @@ router.get('/:id',async(req,res)=>{
     res.render('listings/show.ejs',{listing}) 
 })
 
-router.post('/new',validateListing, async (req, res,next) => {
+router.post('/new',isLoggedIn,validateListing, async (req, res,next) => {
     let { title, description, image, price, location, country } = req.body;
     
     try {
@@ -56,7 +53,7 @@ router.post('/new',validateListing, async (req, res,next) => {
         next(error)
     }
 });
-router.get('/:id/edit',async(req,res)=>{
+router.get('/:id/edit',isLoggedIn,async(req,res)=>{
     let id=req.params.id
     try {
         let listing=await Listing.findById(id)
@@ -66,7 +63,7 @@ router.get('/:id/edit',async(req,res)=>{
     }
 })
 
-router.put('/:id/edit',validateListing,async (req,res,next)=>{
+router.put('/:id/edit',isLoggedIn,validateListing,async (req,res,next)=>{
     let id=req.params.id
     let {title, description, image, price, location, country}=req.body
     try {
@@ -82,7 +79,7 @@ router.put('/:id/edit',validateListing,async (req,res,next)=>{
     }
 })
 
-router.delete('/:id/delete',async (req,res,next)=>{
+router.delete('/:id/delete',isLoggedIn,async (req,res,next)=>{
     let id=req.params.id
     try {
         const deletedList=await Listing.findByIdAndDelete(id)
