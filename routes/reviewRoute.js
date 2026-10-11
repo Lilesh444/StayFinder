@@ -3,9 +3,10 @@ const router=express.Router({mergeParams:true})
 // const wrapAsync=requiree('./utilities/wrapAsync.js')
 const {listingSchema,reviewSchema}=require("../schema.js")
 const customError=require("../utilities/customError.js")
-const Review=require("../models/review.js")
-const Listing=require("../models/listing.js")
+// const Review=require("../models/review.js")
+// const Listing=require("../models/listing.js")
 const { isLoggedIn, isReviewAuthor } = require('../middleware.js')
+const reviewController=require('../controllers/reviewController.js')
 
 
 // server side validation with npm Joi
@@ -20,34 +21,8 @@ const validateReview=(req,res,next)=>{
     }
 }
 // add Reviews
-router.post('/newreview',isLoggedIn,validateReview,async(req,res,next)=>{
-    try {
-        let listing=await Listing.findById(req.params.id)
-    let {comment,rating}=req.body
-    let newReview=new Review({comment,rating})
-    newReview.author=req.user._id
-    await newReview.save()
-     listing.reviews.push(newReview)
-    await listing.save()
-    console.log("new review saved")
-    req.flash('success','New Review Created')
-    res.redirect(`/listing/${listing._id}`)
-    } catch (error) {
-        next(error)
-    }
-})
+router.post('/newreview',isLoggedIn,validateReview,reviewController.postNewReview)
 // delete review
-router.delete('/:reviewId',isLoggedIn,isReviewAuthor,async(req,res,next)=>{
-    try {
-        let {id,reviewId}=req.params
-    console.log(id,"",reviewId)
-    //pehle review ko listing se hatao then review wale Db se hatana hai
-    await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}})
-    await Review.findByIdAndDelete(reviewId) // this to remove the review from review wala DB only listing ke andar se nahi
-    req.flash('success','Review Deleted')
-    res.redirect(`/listing/${id}`)
-    } catch (error) {
-        next(new customError(400,"Bad Request"))
-    }
-})
+router.delete('/:reviewId',isLoggedIn,isReviewAuthor,reviewController.destroyReview)
+
 module.exports=router
