@@ -20,6 +20,9 @@ module.exports.getSpecificListing=async(req,res)=>{
     res.render('listings/show.ejs',{listing}) 
 }
 module.exports.createNewListing=async (req, res,next) => {
+    // req.files gives info about the cloud filename and path
+    let url=req.file.path
+    let filename=req.file.filename
     let { title, description, image, price, location, country } = req.body;
     
     try {
@@ -32,6 +35,7 @@ module.exports.createNewListing=async (req, res,next) => {
         country
     });
     newListing.owner=req.user._id;
+    newListing.image={url,filename}
     await newListing.save()
     req.flash('success','New Listing Created')
     console.log(newListing)

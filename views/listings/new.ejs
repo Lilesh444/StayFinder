@@ -12,7 +12,7 @@
             </div>
 
 
-            <form action="/listing/new" method="post" novalidate class="needs-validation">
+            <form action="/listing/new" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
 
                 <div class="mb-3">
                     <label for="title" class="form-label">
@@ -44,10 +44,10 @@
 
                 <div class="mb-3">
                     <label for="image" class="form-label">
-                        Image URL
+                        Upload Image
                     </label>
 
-                    <input type="text" id="image" name="image" class="form-control" placeholder="Enter image URL">
+                    <input type="file" id="image" name="image" class="form-control" placeholder="Enter image">
                 </div>
 
 
