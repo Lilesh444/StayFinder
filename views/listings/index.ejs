@@ -1,61 +1,132 @@
 <% layout("/layouts/boilerPlate") %>
-<div class="listings-page">
 
+<div class="container-fluid px-lg-5 px-3 py-4">
+
+    <!-- Page heading -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-
         <div>
-            <h3>All Listings</h3>
+            <h2 class="fw-bold mb-1">Explore stays</h2>
             <p class="text-muted mb-0">
-                Explore available places to stay.
+                Find your perfect place to stay.
             </p>
         </div>
 
-        <a href="/listing/new" class="btn btn-primary">
-            <i class="fa-solid fa-plus"></i>
-            Add Listing
+        <a href="/listing/new" class="btn btn-dark rounded-pill px-4">
+            <i class="fa-solid fa-plus me-2"></i>Add Listing
         </a>
-
     </div>
 
+    <!-- Categories -->
+    <!-- <div class="d-flex gap-4 overflow-auto pb-3 mb-4 stay-categories">
 
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-4">
+        <a href="/listing" class="stay-category active">
+            <i class="fa-solid fa-house"></i>
+            <span>All</span>
+        </a>
 
-        <% for(let listing of allListings){ %>
+        <a href="/listing?category=Mountains" class="stay-category">
+            <i class="fa-solid fa-mountain"></i>
+            <span>Mountains</span>
+        </a>
+
+        <a href="/listing?category=Beach" class="stay-category">
+            <i class="fa-solid fa-umbrella-beach"></i>
+            <span>Beach</span>
+        </a>
+
+        <a href="/listing?category=Forest" class="stay-category">
+            <i class="fa-solid fa-tree"></i>
+            <span>Forest</span>
+        </a>
+
+        <a href="/listing?category=Lakes" class="stay-category">
+            <i class="fa-solid fa-water"></i>
+            <span>Lakes</span>
+        </a>
+
+        <a href="/listing?category=City" class="stay-category">
+            <i class="fa-solid fa-city"></i>
+            <span>City</span>
+        </a>
+
+        <a href="/listing?category=Snow" class="stay-category">
+            <i class="fa-solid fa-snowflake"></i>
+            <span>Snow</span>
+        </a>
+
+    </div> -->
+
+    <!-- Listings grid -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3
+                row-cols-xl-4 g-4">
+
+        <% for (let listing of allListings) { %>
 
             <div class="col">
+                <a href="/listing/<%= listing._id %>"
+                   class="text-decoration-none text-dark">
 
-                <a
-                    href="/listing/<%= listing._id %>"
-                    class="listing-link"
-                >
+                    <div class="card border-0 h-100 stay-card">
 
-                    <div class="card h-100">
+                        <!-- Image -->
+                        <div class="stay-image-wrapper">
 
-                        <img
-                            src="<%= listing.image.url %>"
-                            class="card-img-top listing-card-image"
-                            alt="<%= listing.title %>"
-                        >
+                            <img
+                                src="<%= listing.image.url %>"
+                                class="card-img-top stay-image"
+                                alt="<%= listing.title %>"
+                                loading="lazy"
+                            >
 
-                        <div class="card-body">
+                            <span class="badge rounded-pill bg-white text-dark
+                                         position-absolute top-0 start-0 m-3">
+                                Guest favorite
+                            </span>
 
-                            <h5 class="card-title">
-                                <%= listing.title %>
-                            </h5>
+                            <span class="stay-heart">
+                                <i class="fa-regular fa-heart"></i>
+                            </span>
 
-                            <p class="card-text">
+                        </div>
+
+                        <!-- Listing details -->
+                        <div class="card-body px-0 pt-3">
+
+                            <div class="d-flex justify-content-between
+                                        align-items-start gap-2">
+
+                                <h6 class="fw-semibold mb-1">
+                                    <%= listing.title %>
+                                </h6>
+
+                                <span class="text-nowrap small">
+                                    <i class="fa-solid fa-star"></i>
+                                    4.9
+                                </span>
+
+                            </div>
+
+                            <p class="text-muted small mb-1">
+                                <i class="fa-solid fa-location-dot me-1"></i>
+                                <%= listing.location %><% if (listing.country) { %>,
+                                <%= listing.country %><% } %>
+                            </p>
+
+                            <p class="text-muted small mb-2 stay-description">
+                                <%= listing.description %>
+                            </p>
+
+                            <p class="mb-0">
                                 <strong>
                                     &#8377;<%= listing.price.toLocaleString("en-IN") %>
                                 </strong>
-                                / night
+                                <span class="small">night</span>
                             </p>
 
                         </div>
 
                     </div>
-
                 </a>
-
             </div>
 
         <% } %>
