@@ -28,6 +28,18 @@ const listingSchema=new mongoose.Schema({
     owner:{
             type:mongoose.Schema.Types.ObjectId,
             ref:"User"
+    },
+    //store cordinations
+    geometry:{
+        type: {
+      type: String, // Don't do `{ location: { type: String } }`
+      enum: ['Point'], // 'location.type' must be 'Point'
+      required: true
+    },
+    coordinates: {
+      type: [Number],
+      required: true
+    }
     }
 })
 

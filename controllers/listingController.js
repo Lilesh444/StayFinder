@@ -29,8 +29,8 @@ module.exports.createNewListing=async (req, res,next) => {
         limit: 1
         })
         .send()
-    console.log(response.body.features[0].geometry)
-    res.send('Done!!')
+        const feature = response.body.features[0];
+        console.log("Geocoding result:", feature);
     // req.files gives info about the cloud filename and path
     let url=req.file.path
     let filename=req.file.filename
@@ -47,7 +47,10 @@ module.exports.createNewListing=async (req, res,next) => {
     });
     newListing.owner=req.user._id;
     newListing.image={url,filename}
-    await newListing.save()
+    newListing.geometry = feature.geometry;
+    console.log("Saved geometry:", newListing.geometry);   
+    let geoJson=await newListing.save()
+    console.log(geoJson)
     req.flash('success','New Listing Created')
     console.log(newListing)
     res.redirect('/listing');
