@@ -169,8 +169,25 @@
                         </div>
 
                     </div>
+                    
                 </div>
+                <div class="mt-5 pt-4 border-top">
+                        <h3>Where You'll Be</h3>
+                        <div id="map"></div>
+                </div>
+                
             </div>
         </div>
 
     </div>
+    <!-- mapbox logic -->
+                <script>
+                    let mapToken="<%=process.env.MAPBOX_TOKEN%>"
+                    console.log(mapToken)
+                    const map = new mapboxgl.Map({
+                        accessToken: mapToken,
+                        container: 'map', // container ID
+                        center: [85.8245, 20.2960], // starting position [lng, lat]. Note that lat must be set between -90 and 90
+                        zoom: 9 // starting zoom
+                    });
+                </script>
