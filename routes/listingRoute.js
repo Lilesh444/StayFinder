@@ -35,7 +35,7 @@ router.post('/new',isLoggedIn,validateListing,upload.single('image'), listingCon
 
 router.get('/:id/edit',isLoggedIn,isOwner,listingController.getEditform)
 
-router.put('/:id/edit',isLoggedIn,isOwner,validateListing,listingController.putUpdatedData)
+router.put('/:id/edit',isLoggedIn,isOwner,upload.single('image'),validateListing,listingController.putUpdatedData)
 
 router.delete('/:id/delete',isLoggedIn,isOwner,listingController.deleteListing)
 module.exports=router;

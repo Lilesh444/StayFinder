@@ -59,11 +59,17 @@ module.exports.putUpdatedData=async (req,res,next)=>{
     let {title, description, image, price, location, country}=req.body
     try {
         // the authorization code in middleware file
-        await Listing.findByIdAndUpdate(
+        let updatedListing=await Listing.findByIdAndUpdate(
         id,
-        {title, description, image, price, location, country},
+        {title, description, image , price, location, country},
         {new:true}
     )
+    if(typeof req.file != "undefined"){
+        let url=req.file.path
+    let filename=req.file.filename
+    updatedListing.image={url,filename}
+    await updatedListing.save()
+    }
     console.log("Updated")
     res.redirect(`/listing/${id}`)
     } catch (error) {
