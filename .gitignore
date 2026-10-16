@@ -1,8 +1,6 @@
 node_modules/
 .env
-username=lileshchandansahoo_db_user
-passwd=MTUmCgxkuuX5jiJA
-mongodb+srv://lileshchandansahoo_db_user:MTUmCgxkuuX5jiJA@cluster0.uuaejkc.mongodb.net/
+
 
 # git add .
 # git commit -m "Add listing reviews and Mongoose middleware"
