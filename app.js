@@ -3,6 +3,7 @@ require('dotenv').config()
 }
 const express=require('express')
 const app=express()
+const PORT = process.env.PORT || 3000;
 const methodOverride = require('method-override');
 const mongoose=require('mongoose')
 const path=require('path')
@@ -42,7 +43,7 @@ const store = MongoStore.create({
     },
     touchAfter: 24 * 3600
 });
-store.on('error',()=>{
+store.on('error',(error)=>{
     console.log("Error in Mongo Session",error)
 })
 const sessionOptions={
@@ -115,9 +116,14 @@ app.all("/{*splat}",(req,res,next)=>{
 })
 
 app.use((err,req,res,next)=>{
-    let {statusCode=500,message="something Went Wrong!!!"}=err
-    res.render('listings/error.ejs',{statusCode,message})
-    // res.status(statusCode).send(message)
+    const {statusCode=500,message="something Went Wrong!!!"}=err
+    if (res.headersSent) {
+        return next(err);
+    }
+    res.status(statusCode).render('listings/error.ejs', {
+        statusCode,
+        message
+    });
 })
 
 // app.get('/testListing',async(req,res)=>{
@@ -133,6 +139,6 @@ app.use((err,req,res,next)=>{
 //     res.send("successfull")
 // })
 
-app.listen(process.env.PORT,()=>{
+app.listen(PORT,()=>{
     console.log('server is running on 3000');
 })

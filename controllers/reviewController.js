@@ -27,6 +27,6 @@ module.exports.destroyReview=async(req,res,next)=>{
     req.flash('success','Review Deleted')
     res.redirect(`/listing/${id}`)
     } catch (error) {
-        next(new customError(400,"Bad Request"))
+        return next(error);
     }
 }

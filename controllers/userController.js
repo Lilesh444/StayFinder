@@ -2,7 +2,7 @@ const User=require('../models/user')
 const passport = require('passport')
 
 
-module.exports.signUp=async(req,res)=>{
+module.exports.signUp=async(req,res,next)=>{
    try {
      let {username,email,password}=req.body
     let newUser=new User({username,email})
