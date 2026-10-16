@@ -45,7 +45,8 @@ const sessionOptions={
 }
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
+        await mongoose.connect(process.env.MONGO_ATLAS_URL)
+//   await mongoose.connect('mongodb://127.0.0.1:27017/wanderlust');
 }
 main()
 .then(()=>{console.log('Connected to DB');
