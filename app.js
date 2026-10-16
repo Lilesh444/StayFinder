@@ -12,6 +12,7 @@ const listingRoute=require("./routes/listingRoute.js")
 const reviewRoute=require("./routes/reviewRoute.js")
 const userRoute=require('./routes/userRoute.js')
 const session=require('express-session')
+const MongoStore = require("connect-mongo").MongoStore;
 const flash=require('connect-flash')
 const passport=require('passport')
 const LocalStrategy = require('passport-local').Strategy;
@@ -32,7 +33,20 @@ app.use(express.json())
 app.use(methodOverride('_method'));
 app.engine('ejs',ejsMate)
 
+
+// mongodb cloud for session 
+const store = MongoStore.create({
+    mongoUrl: process.env.MONGO_ATLAS_URL,
+    crypto: {
+        secret: "mysecretecode"
+    },
+    touchAfter: 24 * 3600
+});
+store.on('error',()=>{
+    console.log("Error in Mongo Session",error)
+})
 const sessionOptions={
+    store:store,
     secret:"mysecretecode",
     resave:false,
     saveUninitialized:true,
