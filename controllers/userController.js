@@ -10,7 +10,7 @@ module.exports.signUp=async(req,res)=>{
     // console.log(registeredUser)
     req.login(registeredUser,(err)=>{
         if(err){
-            return next(error)
+            return next(err)
         }
         req.flash('success',"New User Registered")
         return res.redirect('/listing')

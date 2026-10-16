@@ -133,6 +133,6 @@ app.use((err,req,res,next)=>{
 //     res.send("successfull")
 // })
 
-app.listen(3000,()=>{
+app.listen(process.env.PORT,()=>{
     console.log('server is running on 3000');
 })
