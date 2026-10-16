@@ -1,27 +1,66 @@
 <% layout("/layouts/boilerPlate") %>
+<!-- tax toggler styling -->
+ <style>
+    
+.tax-toggle {
+    padding: 4px 16px;  
+    min-width: 190px; 
+    min-height:30px ;
+    border: 1px solid #ebebeb;
+    border-radius: 10px;
+    background: #fff;
+    justify-content: space-between;
+}
 
+.tax-toggle label {
+    font-size: 12px !important;
+    font-weight: 500;
+    color: #222 !important;
+    white-space: nowrap;
+}
+
+.tax-switch {
+    width: 2rem !important;
+    height: 1.1rem !important;
+    margin: 0 !important;
+}
+.tax-switch:checked {
+    background-color: #222 !important;
+    border-color: #222 !important;
+}
+
+.tax-switch:focus {
+    box-shadow: none !important;
+}
+
+ </style>
 <div class="container-fluid px-lg-5 px-3 py-4">
 
     <!-- Page heading -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h2 class="fw-bold mb-1">Explore stays</h2>
+            <h2 class="fw-bold mb-1" style="color: #ed295e;">Explore stays</h2>
             <p class="text-muted mb-0">
                 Find your perfect place to stay.
             </p>
         </div>
 
-        <a href="/listing/new" class="btn btn-dark rounded-pill px-4">
-            <i class="fa-solid fa-plus me-2"></i>Add Listing
+        <a href="/listing/new" class="btn rounded-pill px-4" style="background-color: #ed295e; color: white;">
+            <i class="fa-solid fa-plus me-2" ></i>Add Listing
         </a>
     </div>
 
-    <!-- Categories -->
-    <!-- <div class="d-flex gap-4 overflow-auto pb-3 mb-4 stay-categories">
+    <!-- Categories/Filters -->
+    <div class="d-flex gap-4 overflow-auto pb-3 mb-4 stay-categories">
 
         <a href="/listing" class="stay-category active">
             <i class="fa-solid fa-house"></i>
             <span>All</span>
+        </a>
+
+        <a href="/listing?category=Trending" class="stay-category ">
+            <i class="fa-solid fa-fire"></i>
+            <span>Trending</span>
         </a>
 
         <a href="/listing?category=Mountains" class="stay-category">
@@ -54,7 +93,47 @@
             <span>Snow</span>
         </a>
 
-    </div> -->
+        <a href="/listing?category=Snow" class="stay-category">
+            <i class="fa-solid fa-cow"></i>
+            <span>Farms</span>
+        </a>
+
+        <a href="/listing?category=Snow" class="stay-category">
+            <i class="fa-solid fa-campground"></i>
+            <span>Camping</span>
+        </a>
+
+        <a href="/listing?category=Snow" class="stay-category">
+            <i class="fa-solid fa-igloo"></i>
+            <span>Domes</span>
+        </a>
+
+        <a href="/listing?category=Snow" class="stay-category">
+            <i class="fa-solid fa-ship"></i>
+            <span>Boats</span>
+        </a>
+
+        <!-- Tax Toggle -->
+            <div class="tax-toggle d-flex align-items-center gap-2 ms-auto">
+                <label class="small text-secondary text-nowrap mb-0"
+                    for="flexSwitchCheckDefault">
+                    Display Price After Taxes
+                </label>
+
+                <div class="form-check form-switch m-0 p-0 d-flex align-items-center">
+                    <input
+                        class="form-check-input tax-switch m-0"
+                        type="checkbox"
+                        role="switch"
+                        id="flexSwitchCheckDefault"
+                    >
+                </div>
+            </div>
+
+
+
+
+    </div>
 
     <!-- Listings grid -->
     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3
@@ -121,6 +200,7 @@
                                     &#8377;<%= listing.price.toLocaleString("en-IN") %>
                                 </strong>
                                 <span class="small">night</span>
+                                <i class="tax_info" style="display: none;">&nbsp;+18% GST</i>
                             </p>
 
                         </div>
@@ -134,3 +214,44 @@
     </div>
 
 </div>
+
+<!-- Tax Switch JS -->
+ <script>
+    let taxSwitch=document.getElementById('flexSwitchCheckDefault')
+    taxSwitch.addEventListener('click',()=>{
+        let tax_info=document.getElementsByClassName('tax_info')
+        for(info of tax_info){
+            if(info.style.display!='inline'){
+                info.style.display='inline'
+            }else{
+                info.style.display='none'
+            }
+        }
+    })
+
+    // search box   
+    const searchForm = document.getElementById("searchForm");
+    const searchInput = document.getElementById("searchInput");
+    searchForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const query = searchInput.value.toLowerCase().trim();
+
+        document.querySelectorAll(".stay-card").forEach(card => {
+            card.closest(".col").style.display =
+                card.innerText.toLowerCase().includes(query)
+                    ? ""
+                    : "none";
+        });
+    });
+    searchInput.addEventListener("input", function () {
+        const query = searchInput.value.toLowerCase().trim();
+
+        document.querySelectorAll(".stay-card").forEach(card => {
+            card.closest(".col").style.display =
+                card.innerText.toLowerCase().includes(query)
+                    ? ""
+                    : "none";
+        });
+    });
+ </script>

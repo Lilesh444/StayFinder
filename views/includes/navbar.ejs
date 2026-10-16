@@ -3,7 +3,7 @@
     <div class="container-fluid">
 
         <!-- Brand -->
-        <a class="navbar-brand fw-bold" href="/">
+        <a class="navbar-brand fw-bold" style="color: #DA1249;" href="/">
             StayFinder
         </a>
 
@@ -25,23 +25,52 @@
 
             <ul class="navbar-nav">
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
-                </li>
+                </li> -->
 
                 <li class="nav-item">
                     <a class="nav-link" href="/listing">
-                        All Listings
+                        Explore
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="/listing/new">
-                        Add New Listing
+                        Add New Destination
                     </a>
                 </li>
 
             </ul>
+
+            <!-- Search bar -->
+             
+            <div class="ms-auto">
+                <form class="d-flex align-items-center gap-2" id="searchForm" role="search">
+                    <div class="input-group shadow-sm rounded-pill overflow-hidden border">
+                        <span class="input-group-text bg-white border-0 ps-3">
+                            <i class="fa-solid fa-magnifying-glass text-secondary"></i>
+                        </span>
+
+                        <input
+                            class="form-control border-0 shadow-none py-2"
+                            type="search"
+                            id="searchInput"
+                            placeholder="Search destinations..."
+                            aria-label="Search"
+                        >
+                    </div>
+
+                    <button
+                        class="btn rounded-pill px-4 py-2 fw-medium"
+                        style="background-color: #DA1249 !important;"
+                        type="submit"
+                    >
+                        <i class="fa-solid fa-magnifying-glass" style="color: white;"></i>
+                    </button>
+                </form>
+            </div>
+
 
             <!-- Signup / Login / Logout -->
             <ul class="navbar-nav ms-auto">
@@ -50,13 +79,13 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="/users/signup">
-                            Signup
+                            <b>Signup</b>
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="/users/login">
-                            Login
+                            <b>Login</b>
                         </a>
                     </li>
 
@@ -66,7 +95,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="/users/logout">
-                            Logout
+                            <b>Logout</b>
                         </a>
                     </li>
 
