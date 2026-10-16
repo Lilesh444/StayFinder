@@ -1,0 +1,7 @@
+CLOUD_NAME=your cloudinary code
+CLOUD_API_KEY=your cloudinary code
+CLOUD_API_SECRET=your cloudinary code
+MAPBOX_TOKEN=your token from mapbox
+MONGO_ATLAS_URL=your link
+SESSION_CODE=your code
+ 
